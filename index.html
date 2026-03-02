@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC 1.12.2 Modpack Distribution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --accent-color: #27ae60;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* 手順書セクション */
+        .section-title {
+            border-left: 5px solid var(--primary-color);
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .instruction-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .step-number {
+            background: var(--primary-color);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+
+        /* MODリストセクション */
+        .mod-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .mod-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .mod-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .mod-info h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .mod-info p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .btn-download {
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            padding: 0.6rem;
+            border-radius: 4px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .btn-download:hover {
+            background-color: #219150;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        code {
+            background: #eee;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><i class="fa-solid fa-cube"></i> Minecraft 1.12.2 Multi Setup</h1>
+    <p>Essential MODを使用したマルチプレイ用MODファイル配布サイト</p>
+</header>
+
+<div class="container">
+    
+    <h2 class="section-title"><i class="fa-solid fa-book"></i> 導入手順</h2>
+    <div class="instruction-card">
+        <div class="step">
+            <div class="step-number">1</div>
+            <div>Minecraft 1.12.2 で一度バニラを起動し、終了しておきます。（起動構成から、JVM因数の初めの〇Gは、総メモリ量の2分の1~3分の2程度の数値で）</div>
+        </div>
+        <div class="step">
+            <div class="step-number">2</div>
+            <div>Forge 1.12.2 をインストールします。</div>
+        </div>
+        <div class="step">
+            <div class="step-number">3</div>
+            <div>下記のリストから必要なMODをすべてダウンロードします。</div>
+        </div>
+        <div class="step">
+            <div class="step-number">4</div>
+            <div><code>%appdata%/.minecraft/mods</code> フォルダを開き、DLしたファイルをすべて入れます。（起動構成→この1.12.2の構成からフォルダマーク→modsフォルダに直接入れてもOK）</div>
+        </div>
+        <div class="step">
+            <div class="step-number">5</div>
+            <div>ランチャーからForge 1.12.2を起動し、Essentialのフレンド機能で参加。</div>
+        </div>
+    </div>
+
+    <h2 class="section-title"><i class="fa-solid fa-download"></i> MODリスト (Downloads)</h2>
+    <div class="mod-grid" id="mod-list">
+        </div>
+
+</div>
+
+<footer>
+    &copy; Server Admin | Built with Minecraft Love.
+</footer>
+
+<script>
+    // MODのリストをここに定義します
+    // file: ファイル名（/files/フォルダ内にあるもの）
+    const mods = [
+        { name: "Essential Mod", desc: "マルチプレイ・フレンド機能のコアMOD", file: "essential-1.12.2.jar" },
+        { name: "JEI (Just Enough Items)", desc: "アイテムレシピの確認に必須", file: "jei_1.12.2-4.16.1.302.jar" },
+        { name: "JourneyMap", desc: "画面右上にマップを表示します", file: "journeymap-1.12.2-5.7.1.jar" },
+        // ここに手動で追加していく
+    ];
+
+    const modListContainer = document.getElementById('mod-list');
+
+    function renderMods() {
+        modListContainer.innerHTML = mods.map(mod => `
+            <div class="mod-card">
+                <div class="mod-info">
+                    <h3>${mod.name}</h3>
+                    <p>${mod.desc}</p>
+                </div>
+                <a href="/files/${mod.file}" class="btn-download" download>
+                    <i class="fa-solid fa-file-arrow-down"></i> Download
+                </a>
+            </div>
+        `).join('');
+    }
+
+    // 初期実行
+    renderMods();
+</script>
+
+</body>
+</html>
