@@ -12,6 +12,7 @@
             --card-bg: #ffffff;
             --text-color: #333;
             --accent-color: #27ae60;
+            --external-color: #8e44ad; /* 外部リンク用の色 */
         }
 
         body {
@@ -36,7 +37,6 @@
             padding: 0 1rem;
         }
 
-        /* 手順書セクション */
         .section-title {
             border-left: 5px solid var(--primary-color);
             padding-left: 1rem;
@@ -71,7 +71,6 @@
             font-weight: bold;
         }
 
-        /* MODリストセクション */
         .mod-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -105,7 +104,6 @@
         }
 
         .btn-download {
-            background-color: var(--accent-color);
             color: white;
             text-decoration: none;
             padding: 0.6rem;
@@ -116,11 +114,21 @@
             justify-content: center;
             gap: 0.5rem;
             font-weight: bold;
-            transition: background 0.2s;
+            transition: opacity 0.2s;
+        }
+
+        /* ローカルファイル用 */
+        .btn-local {
+            background-color: var(--accent-color);
+        }
+
+        /* 外部リンク用 */
+        .btn-external {
+            background-color: var(--external-color);
         }
 
         .btn-download:hover {
-            background-color: #219150;
+            opacity: 0.8;
         }
 
         footer {
@@ -149,26 +157,32 @@
     
     <h2 class="section-title"><i class="fa-solid fa-book"></i> 導入手順</h2>
     <div class="instruction-card">
+
         <div class="step">
             <div class="step-number">1</div>
-            <div>Minecraft 1.12.2 で一度バニラを起動し、終了しておきます。（起動構成から、JVM因数の初めの〇Gは、総メモリ量の2分の1~3分の2程度の数値で）</div>
+            <div>Forge 1.12.2 をインストール [<a href="https://drive.google.com/file/d/1OLFT7I0yMI4dwwtZHBBnzDneiGhX1man/view?usp=drive_link" target="_blank">インストーラーのダウンロードはここから</a>]</div>
         </div>
+        
         <div class="step">
             <div class="step-number">2</div>
-            <div>Forge 1.12.2 をインストールします。</div>
+            <div>Forge導入後、ランチャーを起動、導入したForge 1.12.2を一度起動し、終了しておく（これをやることで、起動構成フォルダ内に<code>mods</code>フォルダが生成される）<br><small>（起動構成から、JVM引数の初めの〇Gは、総メモリ量の2分の1から3分の2程度の数値に設定推奨）</small></div>
         </div>
+        
         <div class="step">
             <div class="step-number">3</div>
-            <div>下記のリストから必要なMODをすべてダウンロードします。</div>
+            <div>下記のリストから必要なMODをすべてダウンロード。</div>
         </div>
+        
         <div class="step">
             <div class="step-number">4</div>
-            <div><code>%appdata%/.minecraft/mods</code> フォルダを開き、DLしたファイルをすべて入れます。（起動構成→この1.12.2の構成からフォルダマーク→modsフォルダに直接入れてもOK）</div>
+            <div><code>%appdata%/.minecraft/mods</code> フォルダを開き、DLしたファイルをすべて入れる。（解凍も不要、そのまま）<br><small>（起動構成 → 1.12.2の構成のフォルダマーク → <code>mods</code>フォルダに直接入れてもOK）</small></div>
         </div>
+        
         <div class="step">
             <div class="step-number">5</div>
             <div>ランチャーからForge 1.12.2を起動し、Essentialのフレンド機能で参加。</div>
         </div>
+        
     </div>
 
     <h2 class="section-title"><i class="fa-solid fa-download"></i> MODリスト (Downloads)</h2>
@@ -182,32 +196,58 @@
 </footer>
 
 <script>
-    // MODのリストをここに定義します
-    // file: ファイル名（/files/フォルダ内にあるもの）
+    // MODのリスト定義
+    // file: "filename.jar" なら /files/filename.jar を参照
+    // file: "https://..." ならそのまま外部リンクとして扱います
     const mods = [
-        { name: "Essential Mod", desc: "マルチプレイ・フレンド機能のコアMOD", file: "essential-1.12.2.jar" },
-        { name: "JEI (Just Enough Items)", desc: "アイテムレシピの確認に必須", file: "jei_1.12.2-4.16.1.302.jar" },
-        { name: "JourneyMap", desc: "画面右上にマップを表示します", file: "journeymap-1.12.2-5.7.1.jar" },
-        // ここに手動で追加していく
+        { 
+            name: "Essential Mod", 
+            desc: "マルチプレイ・フレンド機能のコアMOD", 
+            file: "https://drive.google.com/file/d/1a-cd1DmfqzIRzJszvTj2rTnbGYsPy0pH/view?usp=drive_link" 
+        },
+        { 
+            name: "GVCReversion2__1.12.2__α.10.2", 
+            desc: "ゲリラMOD 本体", 
+            file: "https://drive.google.com/file/d/10cRPAvBnuA5gR3lLmdnPkFaz3UmINoUP/view?usp=drive_link" 
+        },
+        { 
+            name: "GVCLib__1.12.2__9.9", 
+            desc: "ゲリラMOD 前提MOD", 
+            file: "https://drive.google.com/file/d/1YiJ9uuXbN6PC3eykP1j2cq0onMTjmvXO/view?usp=drive_link" 
+        },
+        { 
+            name: "InventoryTweaks-1.63", 
+            desc: "インベントリ・チェスト等の中身を整理しやすくするMOD", 
+            file: "https://drive.google.com/file/d/14nhGVw5BfabOEeyuh-NVJr4RJsrPZ98t/view?usp=drive_link" 
+        }
     ];
 
     const modListContainer = document.getElementById('mod-list');
 
     function renderMods() {
-        modListContainer.innerHTML = mods.map(mod => `
-            <div class="mod-card">
-                <div class="mod-info">
-                    <h3>${mod.name}</h3>
-                    <p>${mod.desc}</p>
+        modListContainer.innerHTML = mods.map(mod => {
+            // URLがhttpから始まるかチェック
+            const isExternal = mod.file.startsWith('http');
+            const finalUrl = isExternal ? mod.file : `./files/${mod.file}`;
+            const icon = isExternal ? 'fa-cloud-arrow-down' : 'fa-file-arrow-down';
+            const btnClass = isExternal ? 'btn-external' : 'btn-local';
+            const target = isExternal ? 'target="_blank"' : '';
+            const downloadAttr = isExternal ? '' : 'download';
+
+            return `
+                <div class="mod-card">
+                    <div class="mod-info">
+                        <h3>${mod.name}</h3>
+                        <p>${mod.desc}</p>
+                    </div>
+                    <a href="${finalUrl}" class="btn-download ${btnClass}" ${target} ${downloadAttr}>
+                        <i class="fa-solid ${icon}"></i> ${isExternal ? 'Google Drive' : 'Download'}
+                    </a>
                 </div>
-                <a href="/files/${mod.file}" class="btn-download" download>
-                    <i class="fa-solid fa-file-arrow-down"></i> Download
-                </a>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
-    // 初期実行
     renderMods();
 </script>
 
