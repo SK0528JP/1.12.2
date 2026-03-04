@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MC 1.12.2 Modpack Distribution</title>
+
+    <meta property="og:title" content="MC 1.12.2 Modpack Distribution">
+    <meta property="og:description" content="Essential MODを使用したマルチプレイ用セットアップページ、番号順にインストールしてください。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-site-url.com">
+    <meta property="og:image" content="https://your-site-url.com/og-image.png">
+    <meta name="theme-color" content="#27ae60">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -12,11 +20,12 @@
             --card-bg: #ffffff;
             --text-color: #333;
             --accent-color: #27ae60;
-            --external-color: #8e44ad; /* 外部リンク用の色 */
+            --external-color: #8e44ad;
+            --number-bg: #2c3e50; /* 番号バッジの色 */
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
@@ -26,7 +35,7 @@
         header {
             background-color: #2c3e50;
             color: white;
-            padding: 2rem 1rem;
+            padding: 2.5rem 1rem;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
@@ -46,15 +55,15 @@
         .instruction-card {
             background: var(--card-bg);
             padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             margin-bottom: 2rem;
         }
 
         .step {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .step-number {
@@ -71,72 +80,88 @@
             font-weight: bold;
         }
 
+        /* MODリスト */
         .mod-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
         }
 
         .mod-card {
             background: var(--card-bg);
-            border-radius: 8px;
-            padding: 1.2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            position: relative; /* バッジ配置用 */
+            overflow: hidden;
         }
 
         .mod-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        /* 👈 追加：MOD番号バッジ */
+        .mod-badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: var(--number-bg);
+            color: white;
+            padding: 4px 12px;
+            font-weight: 900;
+            font-size: 1rem;
+            border-bottom-right-radius: 12px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .mod-info {
+            margin-top: 1rem; /* バッジを避けるための余白 */
         }
 
         .mod-info h3 {
-            margin: 0 0 0.5rem 0;
-            font-size: 1.1rem;
+            margin: 0.5rem 0;
+            font-size: 1.15rem;
+            color: #2c3e50;
         }
 
         .mod-info p {
             font-size: 0.9rem;
             color: #666;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            min-height: 3em; /* 高さを揃えてガタつき防止 */
         }
 
         .btn-download {
             color: white;
             text-decoration: none;
-            padding: 0.6rem;
-            border-radius: 4px;
+            padding: 0.75rem;
+            border-radius: 6px;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
             font-weight: bold;
-            transition: opacity 0.2s;
+            transition: filter 0.2s;
         }
 
-        /* ローカルファイル用 */
-        .btn-local {
-            background-color: var(--accent-color);
-        }
-
-        /* 外部リンク用 */
-        .btn-external {
-            background-color: var(--external-color);
-        }
+        .btn-local { background-color: var(--accent-color); }
+        .btn-external { background-color: var(--external-color); }
 
         .btn-download:hover {
-            opacity: 0.8;
+            filter: brightness(1.1);
         }
 
         footer {
             text-align: center;
-            margin-top: 3rem;
-            padding: 2rem;
+            margin: 4rem 0 2rem;
             color: #888;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         code {
@@ -149,18 +174,18 @@
 <body>
 
 <header>
-    <h1><i class="fa-solid fa-cube"></i> Minecraft 1.12.2 Multi Setup</h1>
-    <p>Essential MODを使用したマルチプレイ用MODファイル配布サイト</p>
+    <h1><i class="fa-solid fa-cube"></i> MC 1.12.2 Multi Setup</h1>
+    <p>Essential MODを使用したマルチプレイ用配布サイト</p>
 </header>
 
 <div class="container">
     
     <h2 class="section-title"><i class="fa-solid fa-book"></i> 導入手順</h2>
     <div class="instruction-card">
-
+        
         <div class="step">
             <div class="step-number">1</div>
-            <div>Forge 1.12.2 をインストール [<a href="https://drive.google.com/file/d/1OLFT7I0yMI4dwwtZHBBnzDneiGhX1man/view?usp=drive_link" target="_blank">インストーラーのダウンロードはここから</a>]</div>
+            <div>Forge 1.12.2 をインストール [<a href="https://drive.google.com/file/d/1OLFT7I0yMI4dwwtZHBBnzDneiGhX1man/view?usp=drive_link" target="_blank">インストーラー</a>]</div>
         </div>
         
         <div class="step">
@@ -170,10 +195,10 @@
         
         <div class="step">
             <div class="step-number">3</div>
-            <div>下記のリストから必要なMODをすべてダウンロード。</div>
+            <div>下のリストから<strong>全MOD（1番〜最後の方まで）</strong>をダウンロード。</div>
         </div>
         
-        <div class="step">
+         <div class="step">
             <div class="step-number">4</div>
             <div><code>%appdata%/.minecraft/mods</code> フォルダを開き、DLしたファイルをすべて入れる。（解凍も不要、そのまま）<br><small>（起動構成 → 1.12.2の構成のフォルダマーク → <code>mods</code>フォルダに直接入れてもOK）</small></div>
         </div>
@@ -186,58 +211,55 @@
     </div>
 
     <h2 class="section-title"><i class="fa-solid fa-download"></i> MODリスト (Downloads)</h2>
-    <div class="mod-grid" id="mod-list">
-        </div>
+    <div class="mod-grid" id="mod-list"></div>
 
 </div>
 
 <footer>
-    &copy; Server Admin | Built with Minecraft Love.
+    &copy; Server Admin | Build with Love.
 </footer>
 
 <script>
-    // MODのリスト定義
-    // file: "filename.jar" なら /files/filename.jar を参照
-    // file: "https://..." ならそのまま外部リンクとして扱います
+    // JS側では純粋に名前と説明だけを管理するように修正
     const mods = [
         { 
             name: "Essential Mod", 
-            desc: "【1】マルチプレイ・フレンド機能のコアMOD", 
+            desc: "マルチプレイ・フレンド機能のコアMOD", 
             file: "https://drive.google.com/file/d/1a-cd1DmfqzIRzJszvTj2rTnbGYsPy0pH/view?usp=drive_link" 
         },
         { 
-            name: "GVCReversion2__1.12.2__α.10.2", 
-            desc: "【2】ゲリラMOD 本体", 
+            name: "GVCReversion2", 
+            desc: "ゲリラMOD 本体", 
             file: "https://drive.google.com/file/d/10cRPAvBnuA5gR3lLmdnPkFaz3UmINoUP/view?usp=drive_link" 
         },
         { 
-            name: "GVCLib__1.12.2__9.9", 
-            desc: "【3】ゲリラMOD 前提MOD", 
+            name: "GVCLib", 
+            desc: "ゲリラMOD 前提ライブラリ", 
             file: "https://drive.google.com/file/d/1YiJ9uuXbN6PC3eykP1j2cq0onMTjmvXO/view?usp=drive_link" 
         },
         { 
-            name: "InventoryTweaks-1.63", 
-            desc: "【4】インベントリ・チェスト等の中身を整理しやすくするMOD", 
+            name: "Inventory Tweaks", 
+            desc: "Rキー等でインベントリを自動整理", 
             file: "https://drive.google.com/file/d/14nhGVw5BfabOEeyuh-NVJr4RJsrPZ98t/view?usp=drive_link" 
         },
         { 
-            name: "buildcraft-all-8.0.0", 
-            desc: "【5】工業MOD 1", 
+            name: "BuildCraft", 
+            desc: "クァーリー（露天掘り機）等が使える工業MOD", 
             file: "https://drive.google.com/file/d/1kZMMbFuUPEgXv_C9snfe6smP36hx9YT-/view?usp=drive_link" 
         },
         {
-            name: "jei_1.12.2-4.16.1.1013",
-            desc: "【6】アイテムレシピの参照と説明を追加",
+            name: "Just Enough Items (JEI)",
+            desc: "画面右側にレシピ一覧を表示",
             file: "jei_1.12.2-4.16.1.1013.jar"
         },
         {
-            name: "backpacked-1.4.3-1.12.2",
-            desc: "【7】インベントリ拡張用のバックパックを追加",
+            name: "Backpacked",
+            desc: "背負えるバックパックを追加（Bキー）",
             file: "backpacked-1.4.3-1.12.2.jar"
         },
         { 
-            name: "industrialcraft-2-2.8.176-ex112", 
-            desc: "【8】工業MOD 2", 
+            name: "IndustrialCraft 2", 
+            desc: "原子力発電や高度な機械を追加する工業MOD", 
             file: "https://drive.google.com/file/d/1r6QzSB6QyzRvOxPu1E_WC1UdVduZRxEd/view?usp=drive_link" 
         }
     ];
@@ -245,23 +267,23 @@
     const modListContainer = document.getElementById('mod-list');
 
     function renderMods() {
-        modListContainer.innerHTML = mods.map(mod => {
-            // URLがhttpから始まるかチェック
+        modListContainer.innerHTML = mods.map((mod, index) => {
             const isExternal = mod.file.startsWith('http');
             const finalUrl = isExternal ? mod.file : `./files/${mod.file}`;
-            const icon = isExternal ? 'fa-cloud-arrow-down' : 'fa-file-arrow-down';
-            const btnClass = isExternal ? 'btn-external' : 'btn-local';
-            const target = isExternal ? 'target="_blank"' : '';
-            const downloadAttr = isExternal ? '' : 'download';
+            
+            // 👈 番号を index + 1 で生成
+            const modNumber = index + 1;
 
             return `
                 <div class="mod-card">
+                    <div class="mod-badge">#${modNumber}</div>
                     <div class="mod-info">
                         <h3>${mod.name}</h3>
                         <p>${mod.desc}</p>
                     </div>
-                    <a href="${finalUrl}" class="btn-download ${btnClass}" ${target} ${downloadAttr}>
-                        <i class="fa-solid ${icon}"></i> ${isExternal ? 'Google Drive' : 'Download'}
+                    <a href="${finalUrl}" class="btn-download ${isExternal ? 'btn-external' : 'btn-local'}" ${isExternal ? 'target="_blank"' : 'download'}>
+                        <i class="fa-solid ${isExternal ? 'fa-cloud-arrow-down' : 'fa-file-arrow-down'}"></i>
+                        ${isExternal ? 'Google Drive' : 'Download'}
                     </a>
                 </div>
             `;
