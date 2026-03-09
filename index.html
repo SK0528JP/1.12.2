@@ -13,76 +13,201 @@
     <meta name="theme-color" content="#27ae60">
 
     <link rel="icon" href="files/icon.png" type="image/png">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary-color: #3498db;
-            --bg-color: #f4f7f6;
+            --primary-color: #2c3e50;
+            --accent-green: #27ae60;
+            --accent-green-hover: #219653;
+            --accent-purple: #8e44ad;
+            --accent-purple-hover: #732d91;
+            --bg-color: #f8fafc;
             --card-bg: #ffffff;
-            --text-color: #333;
-            --accent-color: #27ae60;
-            --external-color: #8e44ad;
-            --number-bg: #2c3e50; /* 番号バッジの色 */
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --note-bg: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             margin: 0;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
+        /* ヘッダーデザインの強化 */
         header {
-            background-color: #2c3e50;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             color: white;
-            padding: 2.5rem 1rem;
+            padding: 3.5rem 1rem;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-bottom: 4px solid var(--accent-green);
+        }
+
+        header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 0;
+            color: #cbd5e1;
+            font-size: 1.1rem;
         }
 
         .container {
-            max-width: 900px;
-            margin: 2rem auto;
+            max-width: 960px;
+            margin: -2rem auto 3rem; /* ヘッダーに少し食い込ませる */
             padding: 0 1rem;
+            position: relative;
+            z-index: 10;
         }
 
         .section-title {
-            border-left: 5px solid var(--primary-color);
-            padding-left: 1rem;
-            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.8rem;
+            margin: 2.5rem 0 1.5rem;
         }
 
+        .section-title i {
+            color: var(--accent-green);
+            margin-right: 0.5rem;
+        }
+
+        /* インストラクション（手順）周りのUX改善 */
         .instruction-card {
             background: var(--card-bg);
-            padding: 1.5rem;
+            padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            margin-bottom: 2.5rem;
         }
 
         .step {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
 
         .step-number {
             background: var(--primary-color);
             color: white;
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
+            margin-right: 1.2rem;
             flex-shrink: 0;
             font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* MODリスト */
+        .step-content {
+            flex-grow: 1;
+        }
+
+        .step-content strong {
+            color: var(--primary-color);
+        }
+
+        .step-content a {
+            color: var(--accent-purple);
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .step-content a:hover {
+            border-bottom-color: var(--accent-purple);
+        }
+
+        /* 補足説明（Note）のUIデザイン */
+        .note {
+            background-color: var(--note-bg);
+            border-left: 4px solid var(--accent-green);
+            padding: 0.8rem 1rem;
+            margin-top: 0.8rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .note-warning {
+            border-left-color: #f59e0b; /* 警告や強めのメッセージ用 */
+        }
+
+        /* アラートバナー（長文の見出しを分割） */
+        .alert {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e3a8a;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        
+        .alert i {
+            color: #3b82f6;
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        /* ツールバー（コピーボタンなど） */
+        .toolbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .btn-utility {
+            background-color: var(--note-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .btn-utility:hover {
+            background-color: #e2e8f0;
+        }
+
+        /* MODリスト・グリッド */
         .mod-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -92,84 +217,96 @@
         .mod-card {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 1.8rem 1.5rem 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.3s ease;
-            position: relative; /* バッジ配置用 */
-            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
 
         .mod-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+            border-color: #cbd5e1;
         }
 
-        /* 👈 追加：MOD番号バッジ */
         .mod-badge {
             position: absolute;
-            top: 0;
-            left: 0;
-            background-color: var(--number-bg);
+            top: -10px;
+            left: -10px;
+            background-color: var(--primary-color);
             color: white;
-            padding: 4px 12px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 900;
-            font-size: 1rem;
-            border-bottom-right-radius: 12px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            font-size: 1.1rem;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
         }
 
         .mod-info {
-            margin-top: 1rem; /* バッジを避けるための余白 */
+            margin-bottom: 1.5rem;
         }
 
         .mod-info h3 {
-            margin: 0.5rem 0;
+            margin: 0 0 0.5rem 0;
             font-size: 1.15rem;
-            color: #2c3e50;
+            color: var(--primary-color);
+            line-height: 1.4;
         }
 
         .mod-info p {
+            margin: 0;
             font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 1.5rem;
-            min-height: 3em; /* 高さを揃えてガタつき防止 */
+            color: var(--text-muted);
         }
 
+        /* ダウンロードボタン */
         .btn-download {
             color: white;
             text-decoration: none;
-            padding: 0.75rem;
-            border-radius: 6px;
+            padding: 0.8rem;
+            border-radius: 8px;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
             font-weight: bold;
-            transition: filter 0.2s;
+            font-size: 0.95rem;
+            transition: background-color 0.2s, transform 0.1s;
         }
 
-        .btn-local { background-color: var(--accent-color); }
-        .btn-external { background-color: var(--external-color); }
-
-        .btn-download:hover {
-            filter: brightness(1.1);
+        .btn-download:active {
+            transform: scale(0.98);
         }
+
+        .btn-local { background-color: var(--accent-green); }
+        .btn-local:hover { background-color: var(--accent-green-hover); }
+
+        .btn-external { background-color: var(--accent-purple); }
+        .btn-external:hover { background-color: var(--accent-purple-hover); }
 
         footer {
             text-align: center;
             margin: 4rem 0 2rem;
-            color: #888;
-            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         code {
-            background: #eee;
+            background: #f1f5f9;
+            color: #e11d48;
             padding: 0.2rem 0.4rem;
             border-radius: 4px;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 0.9em;
         }
     </style>
 </head>
@@ -182,41 +319,82 @@
 
 <div class="container">
     
-    <h2 class="section-title"><i class="fa-solid fa-book"></i> 導入手順</h2>
+    <div class="section-title">
+        <div><i class="fa-solid fa-book"></i> 導入手順</div>
+    </div>
+    
     <div class="instruction-card">
-        
         <div class="step">
             <div class="step-number">1</div>
-            <div>Java導入済み環境でインストーラーを実行し、Forge 1.12.2 をインストール [<a href="forge-1.12.2-14.23.5.2864-installer.jar" target="_blank">インストーラー</a>]</div>
+            <div class="step-content">
+                Java導入済み環境でインストーラーを実行し、Forge 1.12.2 をインストールします。
+                [<a href="forge-1.12.2-14.23.5.2864-installer.jar" target="_blank" rel="noopener noreferrer">インストーラーDL</a>]
+            </div>
         </div>
         
         <div class="step">
             <div class="step-number">2</div>
-            <div>Forge導入後、ランチャーを起動、導入したForge 1.12.2を一度起動し、終了しておく（これをやることで、起動構成フォルダ内に<code>mods</code>フォルダが生成される）<br><small>（起動構成から、⋯→編集→右下辺りのその他のオプションの最下部にある、JVM引数の初めの〇Gは、自身の総メモリ量から4gb~8gbほど引いた値を推奨、2gbじゃお話にならないのでそんなんでラグいなんて言われてもこっちが困るだけです。）</small></div>
+            <div class="step-content">
+                Forge導入後、ランチャーから導入した「Forge 1.12.2」を一度起動し、終了しておきます。（これにより <code>mods</code> フォルダが生成されます）
+                <div class="note note-warning">
+                    <i class="fa-solid fa-triangle-exclamation"></i> <strong>メモリ割り当ての推奨設定：</strong><br>
+                    起動構成 ＞ ⋯ ＞ 編集 ＞ その他のオプション（最下部）にある JVM引数の初めの「〇G」は、自身の総メモリ量から4GB〜8GBほど引いた値を推奨します、2GBじゃお話にならないので、そんなんでラグいなんて言われてもこっちが困るだけです。
+                </div>
+            </div>
         </div>
         
         <div class="step">
             <div class="step-number">3</div>
-            <div>下のリストから<strong>参加するワールドで必要なもの全て</strong></strong>をダウンロード。</div>
+            <div class="step-content">
+                下のリストから<strong>参加するワールドで必要なもの全て</strong>をダウンロードしてください。
+            </div>
         </div>
         
-         <div class="step">
+        <div class="step">
             <div class="step-number">4</div>
-            <div><code>%appdata%/.minecraft/mods</code> フォルダを開き、DLしたファイルをすべて入れる。（解凍も不要、そのまま）<br><small>（起動構成 → 1.12.2の構成のフォルダマーク → <code>mods</code>フォルダに直接入れてもOK）</small></div>
+            <div class="step-content">
+                <code>%appdata%/.minecraft/mods</code> フォルダを開き、DLしたファイルをすべて入れます。
+                <div class="note">
+                    <i class="fa-solid fa-lightbulb"></i> 解凍不要です、そのまま入れてください。<br>
+                    （ランチャーの起動構成 ＞ 1.12.2のフォルダマーク ＞ <code>mods</code> フォルダに直接入れてもOKです）
+                </div>
+            </div>
         </div>
         
         <div class="step">
             <div class="step-number">5</div>
-            <div>ランチャーからForge 1.12.2を起動して参加</div>
+            <div class="step-content">
+                ランチャーからForge 1.12.2を起動して参加してください。
+            </div>
         </div>
 
         <div class="step">
             <div class="step-number">6</div>
-            <div>ここまでの説明で導入までたどり着けなかった場合、よほどのことがなければ諦めてください、面倒なので</div>
+            <div class="step-content">
+                <span style="color: #e74c3c; font-weight: bold;">最終確認</span><br>
+                ここまでの説明で導入までたどり着けなかった場合、よほどのことがなければ連絡せずに諦めてください、面倒なだけなので。
+            </div>
         </div>
     </div>
 
-    <h2 class="section-title"><i class="fa-solid fa-download"></i> MODリスト (Google Driveからのダウンロードはファイルサイズが大きいmodのためダウンロードまで時間がかかります、タブを閉じたり、再読み込みしたりせずに完了までお待ちください。)</h2>
+    <div class="section-title">
+        <div><i class="fa-solid fa-download"></i> MODリスト</div>
+    </div>
+
+    <div class="alert">
+        <i class="fa-solid fa-circle-info"></i>
+        <div>
+            <strong>Google Driveからのダウンロードについて</strong><br>
+            ファイルサイズが大きいMODのため、ダウンロードまで時間がかかる場合があります、タブを閉じたり、再読み込みしたりせずに完了までお待ちください。
+        </div>
+    </div>
+
+    <div class="toolbar">
+        <button class="btn-utility" id="copy-btn" onclick="copyModList()">
+            <i class="fa-regular fa-copy"></i> MOD一覧をコピー
+        </button>
+    </div>
+
     <div class="mod-grid" id="mod-list"></div>
 
 </div>
@@ -226,7 +404,6 @@
 </footer>
 
 <script>
-    // JS側では純粋に名前と説明だけを管理するように修正
     const mods = [
         { 
             name: "Essential Mod", 
@@ -259,13 +436,13 @@
             file: "jei_1.12.2-4.16.1.1013.jar"
         },
         {
-            name: "twilightforest-1.12.2-3.11.1021-universal.jar",
+            name: "twilightforest-1.12.2-universal",
             desc: "黄昏の森mod 本体",
             file: "https://drive.google.com/file/d/1OCOYXq68VV5xnPB0imOxnVMW2CgNXOwq/view?usp=sharing"
         },
         {
-            name: "TwilightForestSpellPackJP_EX.zip",
-            desc: "黄昏の森modを日本語化するためのリソースパック、modファイルではないので、その他指定されたmodを導入・起動後に設定→リソースパックからダウンロードしたzipファイルを導入→パックを有効化して完了。",
+            name: "TwilightForestSpellPackJP_EX",
+            desc: "黄昏の森modを日本語化するためのリソースパック、modとは違うので起動後に設定 ＞ リソースパックから導入・有効化してください。",
             file: "TwilightForestSpellPackJP_EX.zip"
         },
         {
@@ -282,28 +459,48 @@
 
     const modListContainer = document.getElementById('mod-list');
 
+    // 画面への描画
     function renderMods() {
         modListContainer.innerHTML = mods.map((mod, index) => {
             const isExternal = mod.file.startsWith('http');
             const finalUrl = isExternal ? mod.file : `./files/${mod.file}`;
-            
-            // 👈 番号を index + 1 で生成
             const modNumber = index + 1;
+            
+            const linkAttributes = isExternal 
+                ? 'target="_blank" rel="noopener noreferrer"' 
+                : 'download';
 
             return `
                 <div class="mod-card">
-                    <div class="mod-badge">#${modNumber}</div>
+                    <div class="mod-badge">${modNumber}</div>
                     <div class="mod-info">
                         <h3>${mod.name}</h3>
                         <p>${mod.desc}</p>
                     </div>
-                    <a href="${finalUrl}" class="btn-download ${isExternal ? 'btn-external' : 'btn-local'}" ${isExternal ? 'target="_blank"' : 'download'}>
+                    <a href="${finalUrl}" class="btn-download ${isExternal ? 'btn-external' : 'btn-local'}" ${linkAttributes}>
                         <i class="fa-solid ${isExternal ? 'fa-cloud-arrow-down' : 'fa-file-arrow-down'}"></i>
                         ${isExternal ? 'Google Drive' : 'Download'}
                     </a>
                 </div>
             `;
         }).join('');
+    }
+
+    // コピー機能の実装
+    function copyModList() {
+        const textToCopy = mods.map((mod, index) => `${index + 1}. ${mod.name}`).join('\n');
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            const btn = document.getElementById('copy-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check" style="color:var(--accent-green)"></i> コピーしました！';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 2000);
+        }).catch(err => {
+            console.error('コピーに失敗しました', err);
+            alert('コピーに失敗しました。');
+        });
     }
 
     renderMods();
